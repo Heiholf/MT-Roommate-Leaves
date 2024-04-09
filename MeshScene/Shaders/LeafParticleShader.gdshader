@@ -23,11 +23,13 @@ void start() {
 		rand.x = rand_from_seed(seed);
 		rand.y = rand_from_seed(seed);
 		vec4 sample = texture(screen_texture, rand);
-		
-		break;
+		if (sample.b < 30.0) {
+			TRANSFORM[3].xy = rand * texture_size - texture_size * 0.5;
+			break;
+		}
 		
 	}
-	TRANSFORM[3].xyz = vec3(100.0, 200.0, 0.0);
+	
 	
 	// Called when a particle is spawned.
 }

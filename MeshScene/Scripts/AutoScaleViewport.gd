@@ -15,3 +15,4 @@ func _input(event):
 	if event.is_action_pressed("Update"):
 		size = Vector2(DisplayServer.window_get_size());
 		print(size)
+		
