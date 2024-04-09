@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cmaf3jr8ux840"]
+[gd_scene load_steps=16 format=3 uid="uid://cmaf3jr8ux840"]
 
 [ext_resource type="Texture2D" uid="uid://q8437hwgpwlf" path="res://MeshScene/Objects/Background.tres" id="1_15qq6"]
 [ext_resource type="Script" path="res://MeshScene/Scripts/Setup.gd" id="2_svra4"]
@@ -6,8 +6,12 @@
 [ext_resource type="Shader" path="res://MeshScene/Shaders/Gaussian.gdshader" id="4_wdx41"]
 [ext_resource type="Material" uid="uid://b53d24onv1gyv" path="res://MeshScene/Objects/EmittingParticles.tres" id="5_iaepv"]
 [ext_resource type="Texture2D" uid="uid://dkekhfeqmiho1" path="res://MeshScene/Objects/PlaceholderTexture.tres" id="6_44fd3"]
-[ext_resource type="Script" path="res://MeshScene/Scripts/AutoScale.gd" id="7_02fys"]
+[ext_resource type="Script" path="res://MeshScene/Scripts/ParticleHandler.gd" id="7_02fys"]
+[ext_resource type="Script" path="res://MeshScene/Scripts/AutoScaleParticles.gd" id="7_a6m0q"]
 [ext_resource type="Shader" path="res://MeshScene/Shaders/LeafParticleShader.gdshader" id="8_2gxud"]
+[ext_resource type="Material" uid="uid://bx5ijvdttmoq1" path="res://MeshScene/Objects/LeavesParticles.tres" id="8_l0f5q"]
+[ext_resource type="Script" path="res://MeshScene/Scripts/ViewportHandler.gd" id="9_pnxri"]
+[ext_resource type="Texture2D" uid="uid://chc5wxjkof8x4" path="res://MeshScene/Objects/Leaf.png" id="9_u00no"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wufo8"]
 shader = ExtResource("4_wdx41")
@@ -15,6 +19,8 @@ shader_parameter/r = 10.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dm7yp"]
 shader = ExtResource("8_2gxud")
+
+[sub_resource type="ImageTexture" id="ImageTexture_3idj1"]
 
 [node name="Scene" type="Control"]
 visibility_layer = 31
@@ -77,7 +83,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="CanvasLayer"]
+[node name="Emitting" type="GPUParticles2D" parent="CanvasLayer"]
 visible = false
 position = Vector2(576, 324)
 scale = Vector2(1.116, 0.625)
@@ -86,7 +92,17 @@ process_material = ExtResource("5_iaepv")
 texture = ExtResource("6_44fd3")
 lifetime = 0.2
 visibility_rect = Rect2(-424.064, -430.956, 846.254, 852.522)
-script = ExtResource("7_02fys")
+script = ExtResource("7_a6m0q")
+
+[node name="Falling" type="GPUParticles2D" parent="CanvasLayer"]
+position = Vector2(576, 324)
+scale = Vector2(1.116, 0.625)
+amount = 25
+process_material = ExtResource("8_l0f5q")
+texture = ExtResource("9_u00no")
+lifetime = 4.0
+visibility_rect = Rect2(-424.064, -430.956, 846.254, 852.522)
+script = ExtResource("7_a6m0q")
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="CanvasLayer"]
 visible = false
@@ -95,6 +111,19 @@ scale = Vector2(1.116, 0.625)
 amount = 15
 process_material = SubResource("ShaderMaterial_dm7yp")
 texture = ExtResource("6_44fd3")
-lifetime = 0.2
 visibility_rect = Rect2(-424.064, -430.956, 846.254, 852.522)
 script = ExtResource("7_02fys")
+
+[node name="Temp" type="ColorRect" parent="CanvasLayer"]
+visible = false
+visibility_layer = 8
+material = SubResource("ShaderMaterial_wufo8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.239216, 0.380392, 0.666667, 1)
+script = ExtResource("9_pnxri")
+image = SubResource("ImageTexture_3idj1")
+metadata/_edit_use_anchors_ = true

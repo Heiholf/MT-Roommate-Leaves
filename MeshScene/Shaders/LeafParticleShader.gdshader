@@ -1,6 +1,6 @@
 shader_type particles;
 
-uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
+uniform sampler2D screen_texture;
 
 float rand_from_seed(inout uint seed) {
 	int k;
@@ -16,7 +16,7 @@ float rand_from_seed(inout uint seed) {
 }
 
 void start() {
-	uint seed = NUMBER + RANDOM_SEED;
+	/*uint seed = NUMBER + RANDOM_SEED;
 	vec2 texture_size = vec2(textureSize(screen_texture, 0));
 	vec2 rand;
 	while(true){
@@ -28,14 +28,19 @@ void start() {
 			break;
 		}
 		
-	}
+	}*/
+	
+	TRANSFORM[3].xy = vec2(300.0);
+	VELOCITY.y = 300.0;
+	
 	
 	
 	// Called when a particle is spawned.
 }
 
 void process() {
-	VELOCITY = vec3(0.0);
+	vec2 texture_size = vec2(textureSize(screen_texture, 0));
+	VELOCITY = (texture(screen_texture, TRANSFORM[3].xy / texture_size).xyz - vec3(0.5)) * 300.0;
 	// Called every frame on existing particles (according to the Fixed FPS property).
 }
 
