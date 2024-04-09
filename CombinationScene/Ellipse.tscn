@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddsuu8y732g7b"]
+
+[ext_resource type="Shader" path="res://CombinationScene/Shaders/EllipseColor.gdshader" id="1_bvc7y"]
+[ext_resource type="Texture2D" uid="uid://1v2d3r07hr8g" path="res://CombinationScene/Objects/Circle.png" id="2_gixtq"]
+[ext_resource type="Script" path="res://CombinationScene/Scripts/EllipseScript.gd" id="3_hoghh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jxceh"]
+resource_local_to_scene = true
+shader = ExtResource("1_bvc7y")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/time_offset = 0.0
+shader_parameter/color_amplitude = 0.05
+shader_parameter/color_period = 2.0
+
+[node name="Sprite2D" type="Sprite2D"]
+material = SubResource("ShaderMaterial_jxceh")
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_gixtq")
+script = ExtResource("3_hoghh")
+material = SubResource("ShaderMaterial_jxceh")
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)

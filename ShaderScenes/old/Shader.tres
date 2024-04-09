@@ -1,0 +1,200 @@
+[gd_resource type="VisualShader" load_steps=19 format=3 uid="uid://dixv0v8wqk3tw"]
+
+[ext_resource type="Script" path="res://ShaderScenes/old/ColorInterpolate.gd" id="1_k7y87"]
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_wx7l7"]
+parameter_name = "cutout"
+
+[sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_uxons"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_gbgcs"]
+source = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_fkxpw"]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_2q5u5"]
+parameter_name = "time_after_fall"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeClamp" id="VisualShaderNodeClamp_38kwh"]
+default_input_values = [0, 0.0, 1, 0.0, 2, 1e+07]
+
+[sub_resource type="VisualShaderNodeCustom" id="VisualShaderNodeCustom_gmm2m"]
+default_input_values = [0, null, 1, null, 2, null]
+initialized = true
+script = ExtResource("1_k7y87")
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_8vojd"]
+parameter_name = "summer_color"
+default_value_enabled = true
+default_value = Color(0.34902, 0.556863, 0.0980392, 1)
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_cqyop"]
+parameter_name = "fall_color"
+default_value_enabled = true
+default_value = Color(0.795112, 0.557815, 0.0978334, 1)
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_uk2uk"]
+default_input_values = [0, 0.0, 1, 1.0]
+operator = 3
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_8tiew"]
+parameter_name = "start_time"
+default_value_enabled = true
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_voyy8"]
+default_input_values = [0, 0.0, 1, 6.28]
+operator = 1
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_bc150"]
+default_input_values = [0, 0.0, 1, 6.28]
+operator = 1
+
+[sub_resource type="VisualShaderNodeBooleanParameter" id="VisualShaderNodeBooleanParameter_3msl6"]
+parameter_name = "is_winter"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_dymbn"]
+parameter_name = "winter_color"
+default_value_enabled = true
+default_value = Color(0.8, 0.7748, 0.728, 1)
+
+[sub_resource type="VisualShaderNodeSwitch" id="VisualShaderNodeSwitch_so76f"]
+default_input_values = [0, false, 1, Quaternion(1, 1, 1, 1), 2, Quaternion(0, 0, 0, 0)]
+op_type = 5
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_1fbus"]
+input_name = "time"
+
+[resource]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform bool is_winter;
+uniform vec4 winter_color : source_color = vec4(0.800000, 0.774800, 0.728000, 1.000000);
+uniform vec4 summer_color : source_color = vec4(0.349020, 0.556863, 0.098039, 1.000000);
+uniform vec4 fall_color : source_color = vec4(0.795112, 0.557815, 0.097833, 1.000000);
+uniform float start_time = 0;
+uniform float time_after_fall = 0;
+uniform sampler2D cutout;
+
+
+
+void fragment() {
+// BooleanParameter:29
+	bool n_out29p0 = is_winter;
+
+
+// ColorParameter:30
+	vec4 n_out30p0 = winter_color;
+
+
+// ColorParameter:22
+	vec4 n_out22p0 = summer_color;
+
+
+// ColorParameter:23
+	vec4 n_out23p0 = fall_color;
+
+
+// Input:5
+	float n_out5p0 = TIME;
+
+
+// FloatParameter:25
+	float n_out25p0 = start_time;
+
+
+// FloatOp:27
+	float n_out27p0 = n_out5p0 - n_out25p0;
+
+
+// FloatParameter:19
+	float n_out19p0 = time_after_fall;
+
+
+// FloatOp:28
+	float n_out28p0 = n_out27p0 - n_out19p0;
+
+
+// Clamp:20
+	float n_in20p1 = 0.00000;
+	float n_in20p2 = 10000000.00000;
+	float n_out20p0 = clamp(n_out28p0, n_in20p1, n_in20p2);
+
+
+// FloatOp:24
+	float n_in24p1 = 1.00000;
+	float n_out24p0 = n_out20p0 / n_in24p1;
+
+
+	vec4 n_out21p0;
+// ColorInterpolate:21
+	{
+		n_out21p0 = n_out23p0 * n_out24p0 + n_out22p0 * (1.0f - n_out24p0);
+	}
+
+
+	vec4 n_out31p0;
+// Switch:31
+	n_out31p0 = mix(n_out21p0, n_out30p0, float(n_out29p0));
+
+
+// Input:18
+	vec2 n_out18p0 = SCREEN_UV;
+
+
+	vec4 n_out17p0;
+// Texture2D:17
+	n_out17p0 = texture(cutout, n_out18p0);
+
+
+// VectorOp:16
+	vec3 n_out16p0 = vec3(n_out31p0.xyz) * vec3(n_out17p0.xyz);
+
+
+// Output:0
+	COLOR.rgb = n_out16p0;
+
+
+}
+"
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2(1600, 200)
+nodes/fragment/5/node = SubResource("VisualShaderNodeInput_1fbus")
+nodes/fragment/5/position = Vector2(-2520, 160)
+nodes/fragment/15/node = SubResource("VisualShaderNodeTexture2DParameter_wx7l7")
+nodes/fragment/15/position = Vector2(760, 780)
+nodes/fragment/16/node = SubResource("VisualShaderNodeVectorOp_uxons")
+nodes/fragment/16/position = Vector2(1240, 440)
+nodes/fragment/17/node = SubResource("VisualShaderNodeTexture_gbgcs")
+nodes/fragment/17/position = Vector2(1140, 780)
+nodes/fragment/18/node = SubResource("VisualShaderNodeInput_fkxpw")
+nodes/fragment/18/position = Vector2(760, 700)
+nodes/fragment/19/node = SubResource("VisualShaderNodeFloatParameter_2q5u5")
+nodes/fragment/19/position = Vector2(-2120, 560)
+nodes/fragment/20/node = SubResource("VisualShaderNodeClamp_38kwh")
+nodes/fragment/20/position = Vector2(-1200, 520)
+nodes/fragment/21/node = SubResource("VisualShaderNodeCustom_gmm2m")
+nodes/fragment/21/position = Vector2(-500, 640)
+nodes/fragment/22/node = SubResource("VisualShaderNodeColorParameter_8vojd")
+nodes/fragment/22/position = Vector2(-1200, 880)
+nodes/fragment/23/node = SubResource("VisualShaderNodeColorParameter_cqyop")
+nodes/fragment/23/position = Vector2(-1200, 1080)
+nodes/fragment/24/node = SubResource("VisualShaderNodeFloatOp_uk2uk")
+nodes/fragment/24/position = Vector2(-920, 500)
+nodes/fragment/25/node = SubResource("VisualShaderNodeFloatParameter_8tiew")
+nodes/fragment/25/position = Vector2(-2520, 260)
+nodes/fragment/27/node = SubResource("VisualShaderNodeFloatOp_voyy8")
+nodes/fragment/27/position = Vector2(-2060, 220)
+nodes/fragment/28/node = SubResource("VisualShaderNodeFloatOp_bc150")
+nodes/fragment/28/position = Vector2(-1540, 500)
+nodes/fragment/29/node = SubResource("VisualShaderNodeBooleanParameter_3msl6")
+nodes/fragment/29/position = Vector2(-100, 420)
+nodes/fragment/30/node = SubResource("VisualShaderNodeColorParameter_dymbn")
+nodes/fragment/30/position = Vector2(-80, 740)
+nodes/fragment/31/node = SubResource("VisualShaderNodeSwitch_so76f")
+nodes/fragment/31/position = Vector2(260, 600)
+nodes/fragment/connections = PackedInt32Array(15, 0, 17, 2, 18, 0, 17, 0, 17, 0, 16, 1, 22, 0, 21, 0, 23, 0, 21, 1, 20, 0, 24, 0, 24, 0, 21, 2, 5, 0, 27, 0, 25, 0, 27, 1, 19, 0, 28, 1, 27, 0, 28, 0, 16, 0, 0, 0, 28, 0, 20, 0, 30, 0, 31, 1, 21, 0, 31, 2, 29, 0, 31, 0, 31, 0, 16, 0)

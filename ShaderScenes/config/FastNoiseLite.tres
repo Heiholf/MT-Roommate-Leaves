@@ -1,0 +1,12 @@
+[gd_resource type="FastNoiseLite" format=3 uid="uid://cms7dq26v0h6"]
+
+[resource]
+noise_type = 2
+frequency = 0.034
+offset = Vector3(201.34, 336.12, 0)
+fractal_type = 0
+cellular_jitter = 1.085
+cellular_return_type = 2
+domain_warp_enabled = true
+domain_warp_amplitude = 11.18
+domain_warp_frequency = 0.02

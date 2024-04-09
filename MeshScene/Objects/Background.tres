@@ -1,0 +1,9 @@
+[gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://q8437hwgpwlf"]
+
+[ext_resource type="Gradient" uid="uid://deg445g2va3fn" path="res://MeshScene/Objects/BackgroundGradient.tres" id="1_coss7"]
+
+[resource]
+gradient = ExtResource("1_coss7")
+fill = 1
+fill_from = Vector2(0.509, 1.715)
+fill_to = Vector2(0.470085, 0.0555556)

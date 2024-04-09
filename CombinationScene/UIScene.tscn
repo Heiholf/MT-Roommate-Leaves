@@ -1,0 +1,277 @@
+[gd_scene load_steps=29 format=3 uid="uid://cobjm4ftmq4pa"]
+
+[ext_resource type="Texture2D" uid="uid://dqet4vc8j0nti" path="res://CombinationScene/Objects/AbstraktLayoutSchwarzWeiß.png" id="2_c2eot"]
+[ext_resource type="PackedScene" uid="uid://ddsuu8y732g7b" path="res://CombinationScene/Ellipse.tscn" id="2_jcvp3"]
+[ext_resource type="Texture2D" uid="uid://cw41l0nivrtck" path="res://ShaderScenes/config/leaf.png" id="2_joodu"]
+[ext_resource type="Shader" path="res://CombinationScene/Shaders/Kuwahara.gdshader" id="2_vl5go"]
+[ext_resource type="Shader" path="res://CombinationScene/Shaders/ColorRemap.gdshader" id="3_i4a4x"]
+[ext_resource type="Script" path="res://CombinationScene/Scripts/ColorRemap.gd" id="4_3ftb5"]
+[ext_resource type="Shader" path="res://CombinationScene/Shaders/Median.gdshader" id="4_6ldip"]
+[ext_resource type="Shader" path="res://CombinationScene/Shaders/BoxBlur.gdshader" id="6_ttljg"]
+[ext_resource type="Texture2D" uid="uid://bochceerjrssx" path="res://CombinationScene/Objects/WinterGradient.tres" id="8_e34sw"]
+[ext_resource type="Material" uid="uid://bdhup37uqa8o2" path="res://CombinationScene/Objects/LeafParticleMaterial.tres" id="10_uu3yj"]
+[ext_resource type="Texture2D" uid="uid://cm5s20fv27wfj" path="res://CombinationScene/Objects/leaf.png" id="11_rr4vw"]
+[ext_resource type="Texture2D" uid="uid://cp0xn5lbinj67" path="res://CombinationScene/Objects/Snowflake.png" id="12_d61mj"]
+
+[sub_resource type="Shader" id="Shader_gqk46"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_peq3k"]
+resource_local_to_scene = true
+shader = SubResource("Shader_gqk46")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_awd44"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obubi"]
+resource_local_to_scene = true
+shader = SubResource("Shader_awd44")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_11o7s"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tww6d"]
+resource_local_to_scene = true
+shader = SubResource("Shader_11o7s")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_unntx"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gvll6"]
+resource_local_to_scene = true
+shader = SubResource("Shader_unntx")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_hgfi4"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j26yx"]
+resource_local_to_scene = true
+shader = SubResource("Shader_hgfi4")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="Shader" id="Shader_lbkie"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+
+uniform vec4 color = vec4(1.0f);
+
+
+void fragment() {
+	vec4 original_value = texture(TEXTURE, UV);
+	COLOR = color * original_value;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rolqp"]
+resource_local_to_scene = true
+shader = SubResource("Shader_lbkie")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbqis"]
+shader = ExtResource("2_vl5go")
+shader_parameter/radius = 50
+shader_parameter/offset = Vector3(0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bhmuq"]
+shader = ExtResource("4_6ldip")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tinrw"]
+shader = ExtResource("3_i4a4x")
+shader_parameter/summer_gradient = ExtResource("8_e34sw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8cy0c"]
+shader = ExtResource("6_ttljg")
+shader_parameter/box = Vector2(3, 3)
+
+[node name="UiScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Ellipses" type="CanvasLayer" parent="."]
+
+[node name="Background" type="ColorRect" parent="Ellipses"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Ellipses" type="CanvasGroup" parent="Ellipses"]
+visible = false
+position = Vector2(584, 324)
+scale = Vector2(5.84, 3.24)
+
+[node name="Sprite2D" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_peq3k")
+position = Vector2(-1.5411, 0.771606)
+scale = Vector2(0.160616, 0.153395)
+material = SubResource("ShaderMaterial_peq3k")
+
+[node name="Sprite2D2" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_obubi")
+position = Vector2(51.6267, -29.7839)
+scale = Vector2(0.0717466, 0.0780864)
+material = SubResource("ShaderMaterial_obubi")
+color = Color(0.858824, 0.858824, 0.858824, 1)
+
+[node name="Sprite2D3" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_tww6d")
+position = Vector2(-53.4247, -48.1481)
+scale = Vector2(0.0480308, 0.0458333)
+material = SubResource("ShaderMaterial_tww6d")
+color = Color(0.329412, 0.329412, 0.329412, 1)
+
+[node name="Sprite2D4" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_gvll6")
+position = Vector2(-62.5, 19.1358)
+scale = Vector2(0.0480308, 0.0458333)
+material = SubResource("ShaderMaterial_gvll6")
+color = Color(0.270588, 0.270588, 0.270588, 1)
+
+[node name="Sprite2D5" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_j26yx")
+position = Vector2(-7.70547, 1.90735e-06)
+scale = Vector2(0.0480308, 0.0458333)
+material = SubResource("ShaderMaterial_j26yx")
+color = Color(0.360784, 0.360784, 0.360784, 1)
+
+[node name="Sprite2D6" parent="Ellipses/Ellipses" instance=ExtResource("2_jcvp3")]
+material = SubResource("ShaderMaterial_rolqp")
+position = Vector2(44.6918, 44.4444)
+scale = Vector2(0.0480308, 0.0458333)
+material = SubResource("ShaderMaterial_rolqp")
+color = Color(0.341176, 0.341176, 0.341176, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ellipses"]
+position = Vector2(576, 323)
+scale = Vector2(1.445, 1.06667)
+texture = ExtResource("2_c2eot")
+
+[node name="Kuwahara" type="ColorRect" parent="Ellipses"]
+visible = false
+material = SubResource("ShaderMaterial_mbqis")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Median" type="ColorRect" parent="Ellipses"]
+visible = false
+material = SubResource("ShaderMaterial_bhmuq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Filters" type="CanvasLayer" parent="."]
+
+[node name="ColorRemap" type="ColorRect" parent="Filters"]
+material = SubResource("ShaderMaterial_tinrw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_3ftb5")
+material = SubResource("ShaderMaterial_tinrw")
+summer_gradient = ExtResource("8_e34sw")
+
+[node name="BoxBlur" type="ColorRect" parent="Filters"]
+visible = false
+material = SubResource("ShaderMaterial_8cy0c")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Front" type="CanvasLayer" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Front"]
+visible = false
+position = Vector2(378, 285)
+scale = Vector2(1.59161, 1.08295)
+texture = ExtResource("2_joodu")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Front"]
+visible = false
+position = Vector2(76, 173)
+scale = Vector2(0.344507, 0.266045)
+process_material = ExtResource("10_uu3yj")
+texture = ExtResource("11_rr4vw")
+visibility_rect = Rect2(-774.001, -1137.89, 996.781, 933.425)
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Front"]
+visible = false
+position = Vector2(272, 302)
+scale = Vector2(0.624506, 0.506046)
+process_material = ExtResource("10_uu3yj")
+texture = ExtResource("12_d61mj")
+visibility_rect = Rect2(-774.001, -1137.89, 996.781, 933.425)

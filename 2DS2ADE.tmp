@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://bphoo662ckkx5"]
+
+[ext_resource type="Shader" path="res://shader/ShaderScript.gdshader" id="1_c1b4v"]
+[ext_resource type="Texture2D" uid="uid://4fjbk0tj7hxw" path="res://config/baum.png" id="2_614ub"]
+[ext_resource type="Script" path="res://Script.gd" id="2_bg0fm"]
+[ext_resource type="Texture2D" uid="uid://doj7gnym48xj2" path="res://config/SummerFallGradientTexture.tres" id="3_v5vy0"]
+[ext_resource type="Texture2D" uid="uid://bjlphp77ip4e5" path="res://config/Noise.tres" id="4_1v7uq"]
+[ext_resource type="Texture2D" uid="uid://cw41l0nivrtck" path="res://config/leaf.png" id="6_baxcf"]
+[ext_resource type="Script" path="res://ParticlesScript.gd" id="7_sq4wa"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpk2l"]
+shader = ExtResource("1_c1b4v")
+shader_parameter/is_winter = false
+shader_parameter/start_time = 0.0
+shader_parameter/time_at_fall_start = 0.0
+shader_parameter/winter_color = Color(0.8, 0.7748, 0.728, 1)
+shader_parameter/transition_duration = 1.0
+shader_parameter/cutout = ExtResource("2_614ub")
+shader_parameter/noise_texture = ExtResource("4_1v7uq")
+shader_parameter/summer_fall_gradient = ExtResource("3_v5vy0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e3776"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(-500, -1000, 0)
+emission_shape_scale = Vector3(5, 5, 5)
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector3(0.5, 1, 0)
+spread = 11.196
+initial_velocity_min = 450.0
+initial_velocity_max = 550.0
+angular_velocity_min = 100.0
+angular_velocity_max = 120.0
+orbit_velocity_min = 0.01
+orbit_velocity_max = 0.01
+gravity = Vector3(0, 98, 0)
+
+[node name="2dScene" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="." node_paths=PackedStringArray("particles")]
+material = SubResource("ShaderMaterial_qpk2l")
+scale = Vector2(11000, 11000)
+texture = ExtResource("2_614ub")
+script = ExtResource("2_bg0fm")
+material = SubResource("ShaderMaterial_qpk2l")
+cutout = ExtResource("2_614ub")
+summerFallGradient = ExtResource("3_v5vy0")
+noiseTexture = ExtResource("4_1v7uq")
+particles = NodePath("../GPUParticles2D")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(625, 293)
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_e3776")
+texture = ExtResource("6_baxcf")
+lifetime = 5.0
+script = ExtResource("7_sq4wa")
+cutout = ExtResource("2_614ub")

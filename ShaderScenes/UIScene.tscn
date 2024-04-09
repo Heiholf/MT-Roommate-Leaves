@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4nifbumyid2p"]
+
+[ext_resource type="Shader" path="res://ShaderScenes/shader/ShaderScript.gdshader" id="1_8iyg1"]
+[ext_resource type="Texture2D" uid="uid://4fjbk0tj7hxw" path="res://ShaderScenes/config/baum.png" id="2_f3vvs"]
+[ext_resource type="Script" path="res://ShaderScenes/Script.gd" id="5_qukni"]
+[ext_resource type="Texture2D" uid="uid://doj7gnym48xj2" path="res://ShaderScenes/config/SummerFallGradientTexture.tres" id="6_2j283"]
+[ext_resource type="Texture2D" uid="uid://bjlphp77ip4e5" path="res://ShaderScenes/config/Noise.tres" id="7_h60is"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kojg"]
+shader = ExtResource("1_8iyg1")
+shader_parameter/is_winter = null
+shader_parameter/start_time = 0.0
+shader_parameter/time_at_fall_start = 0.0
+shader_parameter/winter_color = Color(0.8, 0.7748, 0.728, 1)
+shader_parameter/transition_duration = 1.0
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_1kojg")
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_qukni")
+material = SubResource("ShaderMaterial_1kojg")
+cutout = ExtResource("2_f3vvs")
+summerFallGradient = ExtResource("6_2j283")
+noiseTexture = ExtResource("7_h60is")
+metadata/_edit_use_anchors_ = true

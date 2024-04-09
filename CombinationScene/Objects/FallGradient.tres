@@ -1,0 +1,8 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://dkswv684mpmvv"]
+
+[sub_resource type="Gradient" id="Gradient_rpib0"]
+offsets = PackedFloat32Array(0.00236407, 0.0307329, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.64553, 0.326113, 0.165351, 1, 0.908039, 0.386101, 0.012251, 1)
+
+[resource]
+gradient = SubResource("Gradient_rpib0")

@@ -1,0 +1,9 @@
+[gd_resource type="NoiseTexture2D" load_steps=3 format=3 uid="uid://bjlphp77ip4e5"]
+
+[ext_resource type="FastNoiseLite" uid="uid://cms7dq26v0h6" path="res://ShaderScenes/config/FastNoiseLite.tres" id="1_02fpf"]
+
+[sub_resource type="Gradient" id="Gradient_8tcok"]
+
+[resource]
+color_ramp = SubResource("Gradient_8tcok")
+noise = ExtResource("1_02fpf")
