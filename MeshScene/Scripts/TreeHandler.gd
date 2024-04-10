@@ -1,7 +1,7 @@
 extends Node
 
 @export_category("Settings")
-@export_range(0, 200)
+@export_range(0, 400)
 var vertex_count : int = 100
 
 @export_range(0.05, 2)
@@ -54,6 +54,7 @@ func show_triangle(triangle: Delaunay.Triangle):
 	#p.append(triangle.a * screen)
 	poly.polygon = p
 	poly.color = Color.WHITE * summer_gradient.sample(1 -((triangle.a + triangle.b + triangle.c) / 3).y)
+	poly.color = summer_gradient.sample(randf())
 	poly.color.a = 1
 	poly.color
 	poly.antialiased

@@ -64,7 +64,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 script = ExtResource("2_svra4")
-circleness = 0.15
+vertex_count = 200
+circleness = 0.5
 random_wiggle_strength = 0.0
 directional_wiggle_strength = 25.745
 directional_wiggle_frequency = 0.43
@@ -72,7 +73,6 @@ summer_gradient = ExtResource("3_eqgpk")
 metadata/_edit_use_anchors_ = true
 
 [node name="GaussianBlur" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="Blur" type="ColorRect" parent="GaussianBlur"]
 visibility_layer = 8
